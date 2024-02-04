@@ -1,0 +1,16 @@
+---
+- name: Install Common Packages
+  hosts: all
+  become: yes
+  roles:
+    - common
+
+- name: Install Web Servers
+  hosts: backend
+  become: yes
+  roles: webserver
+
+- name: Install Web Servers
+  hosts: loadbalancer
+  become: yes
+  roles: loadbalancer

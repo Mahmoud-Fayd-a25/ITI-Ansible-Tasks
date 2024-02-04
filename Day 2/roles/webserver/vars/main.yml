@@ -1,0 +1,8 @@
+---
+# roles/webserver/vars/main.yml
+packages:
+  - epel-release
+  - "{{ 'firewalld' if ansible_facts['os_family'] == 'RedHat' else 'ufw' }}"
+
+httpd_package: "{{ 'httpd' if ansible_facts['os_family'] == 'RedHat' else 'apache2' }}"
+httpd_service: "{{ 'httpd' if ansible_facts['os_family'] == 'RedHat' else 'apache2' }}"

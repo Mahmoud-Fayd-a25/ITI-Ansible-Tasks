@@ -1,0 +1,7 @@
+---
+# common/handlers/main.yml
+
+- name: Reload Firewall
+  service:
+    name: "{{ firewall_service }}"
+    state: reloaded

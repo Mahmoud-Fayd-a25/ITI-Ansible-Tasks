@@ -1,0 +1,27 @@
+---
+# roles/loadbalancer/tasks/main.yml
+
+- name: Install Nginx
+  package:
+    name: "{{ nginx_package }}"
+    state: present
+
+- name: Configure Nginx
+  template:
+    src: "templates/nginx.conf.j2"
+    dest: "/etc/nginx/nginx.conf"
+  notify:
+    - Reload Nginx
+
+- name: Enable and Start Nginx
+  service:
+    name: "{{ nginx_service }}"
+    state: started
+    enabled: yes
+
+- name: Allow HTTP traffic in firewall
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+  notify: reload firewalld

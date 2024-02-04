@@ -1,0 +1,11 @@
+---
+# webserver/handlers/main.yml
+- name: Reload Nginx
+  service:
+    name: "{{ nginx_service }}"
+    state: reloaded
+
+- name: reload firewalld
+  service:
+    name: "{{ firewall_service }}"
+    state: reloaded

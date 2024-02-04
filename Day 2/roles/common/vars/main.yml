@@ -1,0 +1,15 @@
+---
+# common/vars/main.yml
+packages:
+  - epel-release
+  - "{{ firewall_service }}"
+  - "{{ php_packages }}"
+
+php_packages:
+  - php
+  - php-common
+  - php-pecl-apcu
+  - php-cli
+  - php-mysqlnd
+
+firewall_service: "{{ 'firewalld' if ansible_facts['os_family'] == 'RedHat' else 'ufw' }}"

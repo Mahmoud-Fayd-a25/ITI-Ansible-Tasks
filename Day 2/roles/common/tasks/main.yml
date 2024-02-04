@@ -1,0 +1,27 @@
+---
+# roles/common/tasks/main.yml
+
+- name: Install Common Packages
+  package:
+    name: "{{ packages }}"
+    state: present
+  with_items:
+    - epel-release
+    - "{{ firewall_service }}"
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Install Common Packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  with_items:
+    - epel-release
+    - "{{ firewall_service }}"
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Install PHP Packages on Hosts with Total Memory > 1G
+  package:
+    name: "{{ item }}"
+    state: present
+    with_items: "{{ php_packages }}"
+  when: ansible_facts['memtotal_mb'] > 1024

@@ -1,0 +1,16 @@
+# roles/webserver/templates/auth.conf.j2
+# This is a sample Apache authentication configuration template file.
+
+<Directory "/var/www/html/ahmed.com">
+    AuthType Basic
+    AuthName "Restricted Access"
+    AuthUserFile "/etc/httpd/.htpasswd_ahmed"
+    Require valid-user
+</Directory>
+
+<Directory "/var/www/html/mohamed.com">
+    AuthType Basic
+    AuthName "Restricted Access"
+    AuthUserFile "/etc/httpd/.htpasswd_mohamed"
+    Require valid-user
+</Directory>

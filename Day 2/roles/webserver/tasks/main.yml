@@ -1,0 +1,28 @@
+---
+# webserver/tasks/main.yml
+
+- name: Install Apache (httpd)
+  package:
+    name: "{{ httpd_package }}"
+    state: present
+
+- name: Configure Apache (httpd)
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: "templates/httpd.conf.j2", dest: "/etc/httpd/conf/httpd.conf" }
+    - { src: "templates/auth.conf.j2", dest: "/etc/httpd/conf.d/auth.conf" }
+
+- name: Enable and Start Apache (httpd)
+  service:
+    name: "{{ httpd_service }}"
+    state: started
+    enabled: yes
+
+- name: Allow HTTP traffic in firewall
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+  notify: reload firewalld

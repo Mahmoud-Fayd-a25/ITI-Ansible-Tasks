@@ -1,0 +1,43 @@
+---
+- name: Install and Configure HTTPD on Backend Servers and Nginx on Load Balancer
+  hosts: backend
+  become: true
+  tasks:
+    - name: Install HTTPD
+      yum:
+        name: httpd
+        state: present
+
+    - name: Ensure HTTPD service is enabled and started
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+- name: Install and Configure Nginx on Load Balancer
+  hosts: loadbalancer
+  become: true
+  tasks:
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: Ensure Nginx service is enabled and started
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Allow HTTP traffic in firewall
+      firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+      notify: reload firewalld
+
+  handlers:
+    - name: reload firewalld
+      service:
+        name: firewalld
+        state: reloaded
