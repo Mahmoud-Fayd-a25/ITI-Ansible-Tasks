@@ -3,12 +3,11 @@ Variables like packages and sites are defined in role defaults or vars for bette
 Handlers are used for tasks that require notification triggers.
 Templates (httpd.conf.j2, nginx.conf.j2 and auth.conf.j2) can be populated based on your specific Apache configuration and authentication needs.
 
-
 Run the playbook:
+
 ```
 ansible-playbook install_web_servers.yml -e @web_servers_variables.yml
 ```
-
 
 Project Description: Web Infrastructure Automation with Ansible
 
@@ -17,15 +16,19 @@ This project aims to automate the setup and configuration of a web infrastructur
 ### Project Components:
 
 1. **Ansible Playbooks:**
+
    - **`install_web_servers.yml`:** The main Ansible playbook orchestrating the installation and configuration of web servers.
    - **`web_servers_variables.yml`:** Variables file containing host information, such as IP addresses and domain names.
 
 2. **Roles:**
+
    - **`common`:**
+
      - Installs common packages like EPEL repository and the firewall service based on the OS family.
      - Installs PHP-related packages on servers with total memory larger than 1GB.
 
    - **`webserver`:**
+
      - Installs and configures Apache (httpd) on backend servers.
      - Configures virtual hosts and Apache authentication for specified sites.
 
@@ -34,11 +37,13 @@ This project aims to automate the setup and configuration of a web infrastructur
      - Configures Nginx to proxy traffic to backend servers.
 
 3. **Files:**
+
    - **`inventory.ini`:** Defines host groups for backend and load balancer servers.
    - **`ansible.cfg`:** Ansible configuration file specifying roles path and inventory file location.
    - **`web_servers_variables.yml`:** Host and variable information for the playbook.
 
 4. **Templates:**
+
    - **`roles/webserver/templates/httpd.conf.j2`:** Apache (httpd) configuration template.
    - **`roles/webserver/templates/auth.conf.j2`:** Apache authentication configuration template.
    - **`roles/loadbalancer/templates/nginx.conf.j2`:** Nginx configuration template.
@@ -54,6 +59,7 @@ This project aims to automate the setup and configuration of a web infrastructur
 4. Apache is configured with virtual hosts and authentication for specified sites.
 
 ### Note:
+
 - Adjust variables and configurations in the playbook, roles, and templates according to specific project requirements.
 - This project structure follows best practices for Ansible organization, modularization, and variable management.
 - Regularly update variables, configuration templates, and tasks to adapt to evolving project needs.
